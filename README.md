@@ -107,6 +107,28 @@ class NewModelObserver
     }
 ```
 
+### Restoring Models
+
+Models can be restored using one of three methods:
+
+```php
+$newModel->restorePrevious();
+$newModel->restorePreviousIteration(3);
+$newModel->restoreBeforeDate('2022-01-01');
+```
+
+These functions return true on success and false if a historic state was not found.
+
+`restorePrevious()` will restore a model to its previous state in the histories table.
+
+`restorePreviousIteration(int $index)` will restore a model to a state using zero-based numbering. (i.e. `restorePreviousIteration(0)` is the same as `restorePrevious()`).
+
+`restoreBeforeDate(DateTimeInterface|string $date)` will restore a model to the most recent state before the given `$date` value using the `updated_at` and `created_at` fields.
+
+#### Restoration Notes
+- When restored, a copy of the current model is also saved to the histories table.
+- HasHistories uses the history table `id` field to assess the most recent state, as multiple restorations can lead to apparent duplicates appearing in the histories table.
+
 ### Customising Behaviour
 
 #### Ignored Fields
@@ -184,4 +206,12 @@ class NewModelObserver
     {
         $newModel->saveHistory('sqlite');
     }
+```
+
+When restoring models, the same connection parameter can be added at the end of each method call:
+
+```php
+$newModel->restorePrevious('sqlite');
+$newModel->restorePreviousIteration(3, 'sqlite');
+$newModel->restoreBeforeDate('2022-01-01', 'sqlite');
 ```
