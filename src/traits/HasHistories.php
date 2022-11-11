@@ -28,7 +28,7 @@ trait HasHistories
             ->toString();
     }
 
-    public function saveHistory(): void
+    public function saveHistory(?string $connection = null): void
     {
         $attributes = $this->getOriginal();
         $attributesToSave = array_diff(array_keys($attributes), $this->getIgnoredFields());
@@ -39,7 +39,7 @@ trait HasHistories
             $interestingAttributes[$this->getHistoryModelIdReference()] = $interestingAttributes[$this->getKeyName()];
             unset($interestingAttributes[$this->getKeyName()]);
 
-            DB::table($this->getHistoryTableName())->insert($interestingAttributes);
+            DB::connection($this->connection ?? $connection)->table($this->getHistoryTableName())->insert($interestingAttributes);
         }
     }
 }

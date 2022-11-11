@@ -166,3 +166,22 @@ class User extends Model
 	
     protected string $historiesModelIdReference = 'user_model_id'; // Instead of 'user_id'.
 ```
+
+#### Histories Table Connection
+By default, HasHistories expects that the history table will use the same connection as the model to which it is applied. Occasionally you may want to specify a different connection for your history table. This can be done with an optional parameter in your `saveHistory` method call:
+
+```php
+<?php
+
+namespace App\Observers;
+
+use App\Models\NewModel;
+use Illuminate\Support\Facades\Auth;
+
+class NewModelObserver
+{
+    public function creating(NewModel $newModel): void
+    {
+        $newModel->saveHistory('sqlite');
+    }
+```
