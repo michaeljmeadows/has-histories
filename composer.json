@@ -3,12 +3,15 @@
     "description": "A simple trait to aid Eloquent model version history logging.",
     "type": "library",
     "require": {
-        "laravel/framework": ">=8.0"
+        "php": "^8.0",
+        "illuminate/database": "^8.0|^9.0|^10.0",
+        "illuminate/support": "^8.0|^9.0|^10.0"
     },
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "michaeljmeadows\\Traits\\": "src/traits/"
+            "michaeljmeadows\\Traits\\": "src/traits/",
+            "Michaeljmeadows\\Traits\\": "src/traits/"
         }
     },
     "authors": [

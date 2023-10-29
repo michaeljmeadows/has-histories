@@ -3,11 +3,23 @@
 namespace michaeljmeadows\Traits;
 
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Query\Builder;
 
 trait HasHistories
 {
+    public static function bootHasHistories()
+    {
+        static::updating(function (Model $model) {
+            $model->saveHistory();
+        });
+
+        static::restored(function (Model $model) {
+            $model->saveHistory();
+        });
+    }
+
     public function getIgnoredFields(): array
     {
         return $this->ignoredFields ?? [];

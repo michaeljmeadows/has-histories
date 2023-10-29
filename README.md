@@ -79,34 +79,6 @@ class NewModel extends Model
 	
 ```
 
-Version history can then be logged by calling the model's `saveHistory()` method when changes are being saved. We recommend a model observer, but Events are also a sensible alternative:
-
-```php
-<?php
-
-namespace App\Observers;
-
-use App\Models\NewModel;
-use Illuminate\Support\Facades\Auth;
-
-class NewModelObserver
-{
-    public function creating(NewModel $newModel): void
-    {
-        $newModel->saveHistory();
-    }
-	
-    public function updating(NewModel $newModel): void
-    {
-        $newModel->saveHistory();
-    }
-	
-    public function deleting(NewModel $newModel): void
-    {
-        $newModel->saveHistory();
-    }
-```
-
 ### Restoring Models
 
 Models can be restored using one of three methods:
